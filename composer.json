@@ -11,6 +11,7 @@
         "laravel/tinker": "^2.10.1"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.5",
         "fakerphp/faker": "^1.24.1",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.22",
@@ -55,6 +56,9 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "ide": [
+            "@php artisan ide-helper:models --dir='modules'"
         ]
     },
     "extra": {
