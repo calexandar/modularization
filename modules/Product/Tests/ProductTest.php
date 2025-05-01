@@ -2,9 +2,9 @@
 
 namespace Modules\Product\Tests;
 
-use Database\Factories\ProductFactory;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Modules\Product\Models\Product;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ProductTest extends TestCase
 {
@@ -12,11 +12,11 @@ class ProductTest extends TestCase
     public function testProductCreation()
     {
         // Create a new product instance
-        $product = ProductFactory::new()->create(); 
-        dd($product); 
+        $product = Product::factory()->create(); 
+ 
 
         $product->name = 'Test Product';
-        $product->price = 99.99;
+        $product->price_in_cents = 99.99;
         
         // Save the product to the database
         $product->save();
@@ -24,7 +24,7 @@ class ProductTest extends TestCase
         // Assert that the product was created successfully
         $this->assertDatabaseHas('products', [
             'name' => 'Test Product',
-            'price' => 99.99,
+            'price_in_cents' => 99.99,
         ]);
     }
 }
