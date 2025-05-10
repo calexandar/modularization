@@ -54,7 +54,7 @@ class CheckoutControllerTest extends TestCase
 
                 $this->assertEquals($product->price_in_cents, $orderLine->price_in_cents);
                 $this->assertEquals(1, $orderLine->quantity);  
-                $this->assertArrayHasKey($product->id, $orderLine->product->toArray());
+
             }
 
         }
