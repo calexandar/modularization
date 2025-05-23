@@ -57,6 +57,8 @@ class CheckoutControllerTest extends TestCase
 
             }
 
+             //Event::assertDispatched(OrderStarted::class);
+
         }
 
     }
