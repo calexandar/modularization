@@ -2,17 +2,20 @@
 
 namespace Modules\Order\Tests\Http\Controllers;
 
-
-use Tests\TestCase;
-use Database\Factories\UserFactory;
-use Modules\Payment\PayBuddy\PayBuddy;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Modules\Order\Models\Order;
+use Database\Factories\UserFactory;
+use Modules\Order\Tests\OrderTestCase;
+use Modules\Payment\PayBuddy;
+use PHPUnit\Framework\Attributes\Test;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Modules\Product\Database\Factories\ProductFactory;
 
 
-class CheckoutControllerTest extends TestCase
+class CheckoutControllerTest extends OrderTestCase
 {
+    use DatabaseMigrations;
+    #[Test]
     public function it_succesufly_crates_an_order(): void
     {
         $user = UserFactory::new()->create();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Payment\PayBuddy;
+namespace Modules\Payment;
 
 use NumberFormatter;
 use Illuminate\Support\Str;
