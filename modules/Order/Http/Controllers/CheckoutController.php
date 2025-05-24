@@ -3,6 +3,7 @@
 namespace Modules\Order\Http\Controllers;
 
 use Modules\Payment\PayBuddy;
+use Modules\Product\Models\Product;
 use App\Http\Controllers\Controller;
 use Modules\Order\Http\Requests\CheckoutRequest;
 
