@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->uuid('payment_id');
-            $table->string('payment_gateway');
-            $table->unsignedInteger('total_in_cents');
-            $table->string('status');
+            $table->foreignId('order_id');
+            $table->foreignId('product_id');
+            $table->integer('product_price_in_cents')->nullable();
+            $table->integer('quantity');
             $table->timestamps();
-
         });
     }
 

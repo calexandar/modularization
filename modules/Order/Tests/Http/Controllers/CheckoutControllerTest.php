@@ -30,7 +30,7 @@ class CheckoutControllerTest extends OrderTestCase
         $paymentToken = PayBuddy::validToken();
 
         $response = $this->actingAs($user)
-            ->post(route('checkout'), [
+            ->postJson(route('checkout'), [
                 'payment_token' => $paymentToken,
                 'products' => [
                     ['id' => $products->first()->id,'quantity' => 1],
@@ -55,12 +55,15 @@ class CheckoutControllerTest extends OrderTestCase
             foreach ($products as $product) {
                 $orderLine = $order->lines->where('product_id', $product->id)->first();
 
-                $this->assertEquals($product->price_in_cents, $orderLine->price_in_cents);
+                $this->assertEquals($product->price_in_cents, $orderLine->product_price_in_cents);
                 $this->assertEquals(1, $orderLine->quantity);  
 
             }
 
-             //Event::assertDispatched(OrderStarted::class);
+            $products = $products->fresh();
+
+            $this->assertEquals(9, $products->first()->stock);
+            $this->assertEquals(19, $products->last()->stock);
 
         }
 

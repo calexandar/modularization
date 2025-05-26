@@ -26,6 +26,7 @@ final class PayBuddy
     {
         return new self();
     }
+    
     public static function validToken(): string
     {
         return (string) Str::uuid();
@@ -36,8 +37,10 @@ final class PayBuddy
         return substr(self::validToken(), -35);
     }
 
-    public function validateToken()
+    public function validateToken(string $token): void
     {
-        
+        if(! Str::isUuid($token)) {
+            throw new \RuntimeException('Invalid token.');
+        }
     }
 }
