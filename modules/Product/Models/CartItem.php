@@ -2,9 +2,18 @@
 
 namespace Modules\Product\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Product\ProductDTO;
 
-class CartItem extends Model
+
+
+readonly class CartItem 
 {
-    //
+    public function __construct(
+        public ProductDTO $product,
+        public int $quantity
+    )
+    {
+        
+    }
+
 }
