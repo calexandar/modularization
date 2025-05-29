@@ -60,6 +60,15 @@ class CheckoutController extends Controller
                 'quantity' => $cartItem->quantity,
             ]);
         }
+
+        $payment = $order->payments()->create([
+            'total_in_cents' => $orderTotalInCents,
+            'status' => 'paid',
+            'payment_gateway' => 'PayBuddy',
+            'payment_id' => $charge['id'],
+            'user_id' => $request->user()->id,
+            'order_id' => $order->id
+        ]);
       
         return response()->json([], 201);
     }
