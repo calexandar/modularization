@@ -80,4 +80,25 @@ class CheckoutControllerTest extends OrderTestCase
 
         }
 
+        #[Test]
+        public function it_fails_when_payment_token_is_invalid(): void
+        {
+            $user = UserFactory::new()->create();
+            $product = ProductFactory::new()->create();
+            $paymentToken = PayBuddy::invalidToken();
+
+            $response = $this->actingAs($user)
+                ->postJson(route('checkout'), [
+                    'payment_token' => $paymentToken,
+                    'products' => [
+                        ['id' => $product->id,'quantity' => 1],
+                    ],
+                ]);
+
+            //$response->assertStatus(422)
+                //->assertJsonValidationErrors(['payment_token']);
+            
+            $this->assertEquals(0, Order::query()->count());    
+        }    
+
     }
