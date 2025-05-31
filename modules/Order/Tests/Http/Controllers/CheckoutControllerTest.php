@@ -16,7 +16,7 @@ class CheckoutControllerTest extends OrderTestCase
 {
     use DatabaseMigrations;
     #[Test]
-    public function it_succesufly_crates_an_order(): void
+    public function it_succesufly_creates_an_order(): void
     {
         $user = UserFactory::new()->create();
 
@@ -95,8 +95,8 @@ class CheckoutControllerTest extends OrderTestCase
                     ],
                 ]);
 
-            //$response->assertStatus(422)
-                //->assertJsonValidationErrors(['payment_token']);
+            $response->assertStatus(422)
+                ->assertJsonValidationErrors(['payment_token']);
             
             $this->assertEquals(0, Order::query()->count());    
         }    

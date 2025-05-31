@@ -23,7 +23,7 @@ class PurchaseItems
     {
         $orderTotalInCents = $items->totalInCents();
 
-      $order =  $this->databaseManager->transaction(function () use ($items, $paymentProvider, $paymentToken, $userId, $orderTotalInCents) {
+        return $this->databaseManager->transaction(function () use ($items, $paymentProvider, $paymentToken, $userId, $orderTotalInCents) {
             $order = Order::query()->create([
                 'status' => 'paid',
                 'total_in_cents' => $orderTotalInCents,
@@ -43,7 +43,7 @@ class PurchaseItems
 
             $this->createPaymentForOrder->handle($order->id, $userId, $orderTotalInCents, $paymentProvider, $paymentToken);
 
-          
+          return $order;
        });
 
        return $order;
