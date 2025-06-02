@@ -24,21 +24,17 @@ class PurchaseItems
         $orderTotalInCents = $items->totalInCents();
 
         return $this->databaseManager->transaction(function () use ($items, $paymentProvider, $paymentToken, $userId, $orderTotalInCents) {
-            $order = Order::query()->create([
-                'status' => 'paid',
-                'total_in_cents' => $orderTotalInCents,
-                'user_id' => $userId
-            ]);
+            // $order = Order::query()->create([
+            //     'status' => 'paid',
+            //     'total_in_cents' => $orderTotalInCents,
+            //     'user_id' => $userId
+            // ]);
 
+            $order = Order::startForUser($userId);
+            $order->addLineitemsFromCartItems($items);
     
             foreach ($items->items() as $cartItem) {
                 $this->productStockManager->decrement($cartItem->product->id, $cartItem->quantity);
-
-                $order->lines()->create([
-                    'product_id' => $cartItem->product->id,
-                    'product_price_in_cents' => $cartItem->product->priceInCents,
-                    'quantity' => $cartItem->quantity,
-                ]);
             }
 
             $this->createPaymentForOrder->handle($order->id, $userId, $orderTotalInCents, $paymentProvider, $paymentToken);
