@@ -30,6 +30,7 @@ class Order extends Model
     ];
 
     public const PENDING = 'pending';
+    public const COMPLETED = 'completed';
 
     public function user(): BelongsTo
     {
@@ -80,5 +81,13 @@ class Order extends Model
             ]));
         }
       
+    }
+
+    public function fulfill(): void
+    {
+        $this->status = self::COMPLETED;
+
+        $this->save();
+        $this->lines()->saveMany($this->lines());
     }
 }

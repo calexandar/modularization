@@ -32,6 +32,7 @@ class PurchaseItems
 
             $order = Order::startForUser($userId);
             $order->addLineitemsFromCartItems($items);
+            $order->fulfill();
     
             foreach ($items->items() as $cartItem) {
                 $this->productStockManager->decrement($cartItem->product->id, $cartItem->quantity);
