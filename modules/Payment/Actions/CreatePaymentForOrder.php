@@ -8,6 +8,14 @@ use Modules\Order\Exceptions\PaymentFailedException;
 
 class CreatePaymentForOrder
 {
+    /**
+     * Handles the payment process for a given order.
+     * 
+     * @throws PaymentFailedException If the payment token is invalid.
+     * 
+     * @return Payment The payment record created for the order.
+     */
+
     public function handle(
         int $orderId,
         int $userId,

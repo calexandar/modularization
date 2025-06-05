@@ -6,11 +6,12 @@ use App\Models\User;
 use Modules\Payment\Payment;
 use Modules\Order\Models\OrderLine;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Product\CartItemCollection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Product\CartItemCollection;
+use Modules\Order\Exceptions\OrderMissingOrderLinesException;
 
 class Order extends Model
 {
@@ -83,8 +84,18 @@ class Order extends Model
       
     }
 
+    /**
+     * Complete the order by marking its status as completed and saving all the lines.
+     *
+     * @throws OrderMissingOrderLinesException
+     * @return void
+     */
     public function fulfill(): void
     {
+        if($this->lines()->isEmpty()) {
+            throw new OrderMissingOrderLinesException();
+        }
+        
         $this->status = self::COMPLETED;
 
         $this->save();
