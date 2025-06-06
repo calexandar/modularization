@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('total_in_cents');
             $table->string('status');
-            $table->string('payment_gateway');  
+            $table->string('payment_gateway');
             $table->string('payment_id');
-            $table->foreignId('user_id');  
-            $table->foreignId('order_id');  
+            $table->foreignId('user_id');
+            $table->foreignId('order_id');
             $table->timestamps();
         });
     }

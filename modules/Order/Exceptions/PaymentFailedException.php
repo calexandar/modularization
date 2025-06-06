@@ -2,7 +2,6 @@
 
 namespace Modules\Order\Exceptions;
 
-
 class PaymentFailedException extends \RuntimeException
 {
     public static function dueToInvalidToken(): PaymentFailedException

@@ -3,10 +3,10 @@
 namespace Modules\Payment;
 
 use App\Models\User;
-use Modules\Order\Models\Order;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Order\Models\Order;
 
 class Payment extends Model
 {

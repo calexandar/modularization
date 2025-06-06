@@ -2,10 +2,10 @@
 
 namespace Modules\Order\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest; 
+use Illuminate\Foundation\Http\FormRequest;
 
 class CheckoutRequest extends FormRequest
-{   
+{
     public function authorize(): bool
     {
         return true;
@@ -24,5 +24,5 @@ class CheckoutRequest extends FormRequest
             'products.*.id' => ['required', 'numeric'],
             'products.*.quantity' => ['required', 'numeric'],
         ];
-    }   
+    }
 }
