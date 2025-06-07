@@ -3,6 +3,7 @@
 namespace Modules\Order\Actions;
 
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\Mail;
 use Modules\Order\Models\Order;
 use Modules\Payment\Actions\CreatePaymentForOrder;
 use Modules\Payment\PayBuddy;
@@ -38,6 +39,8 @@ class PurchaseItems
 
             return $order;
         });
+
+        Mail::to($userEmail)->send( new OrderReceived($order->localizedTotal()));
 
         return $order;
 
