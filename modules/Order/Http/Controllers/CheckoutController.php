@@ -28,7 +28,8 @@ class CheckoutController extends Controller
                 $cartItems,
                 $payBuddy,
                 $request->input('payment_token'),
-                $request->user()->id
+                $request->user()->id,
+                $request->user()->email
             );
         } catch (PaymentFailedException) {
             throw ValidationException::withMessages(['

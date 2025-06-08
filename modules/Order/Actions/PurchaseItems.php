@@ -2,12 +2,14 @@
 
 namespace Modules\Order\Actions;
 
-use Illuminate\Database\DatabaseManager;
-use Illuminate\Support\Facades\Mail;
-use Modules\Order\Models\Order;
-use Modules\Payment\Actions\CreatePaymentForOrder;
 use Modules\Payment\PayBuddy;
+use Modules\Order\Models\Order;
+use Illuminate\Support\Facades\Mail;
 use Modules\Product\CartItemCollection;
+use Illuminate\Database\DatabaseManager;
+use Modules\Order\Events\OrderFullfiled;
+use Illuminate\Contracts\Events\Dispatcher;
+use Modules\Payment\Actions\CreatePaymentForOrder;
 use Modules\Product\Warehouse\ProductStockManager;
 
 class PurchaseItems
@@ -15,10 +17,11 @@ class PurchaseItems
     public function __construct(
         protected ProductStockManager $productStockManager,
         protected CreatePaymentForOrder $createPaymentForOrder,
-        protected DatabaseManager $databaseManager
+        protected DatabaseManager $databaseManager,
+        protected Dispatcher $events
     ) {}
 
-    public function handle(CartItemCollection $items, PayBuddy $paymentProvider, string $paymentToken, int $userId): Order
+    public function handle(CartItemCollection $items, PayBuddy $paymentProvider, string $paymentToken, int $userId, string $userEmail): Order
     {
 
         return $this->databaseManager->transaction(function () use ($items, $paymentProvider, $paymentToken, $userId) {
@@ -40,7 +43,13 @@ class PurchaseItems
             return $order;
         });
 
-        Mail::to($userEmail)->send( new OrderReceived($order->localizedTotal()));
+        $this->events->dispatch(
+            new OrderFullfiled(
+                orderId: $order->id,
+                userId: $userId,
+                userEmail: $userEmail
+            )
+        );
 
         return $order;
 
