@@ -2,12 +2,15 @@
 
 namespace Modules\Order\Events;
 
-class OrderFullfiled
+use Modules\Product\CartItemCollection;
+
+readonly class OrderFullfiled
 {
     public function __construct(
         public int $orderId,
         public int $totalInCents,
         public string $localizedTotal,
+        public CartItemCollection   $cartItems,
         public int $userId,                                                                                                                                 
         public string $userEmail
     )

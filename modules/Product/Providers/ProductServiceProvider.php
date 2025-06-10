@@ -3,6 +3,7 @@
 namespace Modules\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Product\Providers\EventServiceProvider;
 
 class ProductServiceProvider extends ServiceProvider
 {
@@ -10,5 +11,7 @@ class ProductServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
         $this->mergeConfigFrom(__DIR__.'/../config.php', 'product');
+
+        $this->app->register(EventServiceProvider::class);
     }
 }

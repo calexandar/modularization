@@ -44,6 +44,7 @@ class PurchaseItems
                 orderId: $order->id,
                 totalInCents: $order->totalInCents,
                 localizedTotal: $order->localizedTotal(),
+                cartItems: $items,
                 userId: $userId,
                 userEmail: $userEmail
             )

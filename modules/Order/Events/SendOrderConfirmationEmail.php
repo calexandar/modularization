@@ -3,6 +3,7 @@
 namespace Modules\Order\Events;
 
 use Illuminate\Support\Facades\Mail;
+use Modules\Order\Mail\OrderReceived;
 use Modules\Order\Events\OrderFullfiled;
 
 class SendOrderConfirmationEmail
