@@ -15,6 +15,8 @@ class DecreaseProductStock
     }
    public function handle(OrderFullfiled $event): void
    {
-        foreach ()
+        foreach($event->cartItems->items() as $cartItem){
+            $this->productStockManager->decrement($cartItem->product->id, $cartItem->quantity);
+        }
    }
 }
