@@ -2,15 +2,18 @@
 
 namespace Modules\Order\Tests\Http\Controllers;
 
+
+
+use Modules\Payment\PayBuddy;
+use Modules\Order\Models\Order;
 use Database\Factories\UserFactory;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Event;
+use Modules\Order\Tests\OrderTestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Mail;
-use Modules\Order\Models\Order;
-use Modules\Order\Tests\OrderTestCase;
-use Modules\Payment\PayBuddy;
 use Modules\Product\Database\Factories\ProductFactory;
-use PHPUnit\Framework\Attributes\Test;
 
 class CheckoutControllerTest extends OrderTestCase
 {
@@ -20,6 +23,7 @@ class CheckoutControllerTest extends OrderTestCase
     public function it_succesufly_creates_an_order(): void
     {
         Mail::fake();
+        Event::fake();
         
         $user = UserFactory::new()->create();
 
@@ -48,10 +52,12 @@ class CheckoutControllerTest extends OrderTestCase
                 'order_url' => $order->url(),
             ])
             ->assertStatus(201);
+            
+        Event::assertDispatched(OrderFullfiled::class);    
 
-        Mail::assertSent(OrderReceived::class, function(OrderReceived $mail) use ($user) {
-            return $mail->hasTo($user->email);
-        });    
+        // Mail::assertSent(OrderReceived::class, function(OrderReceived $mail) use ($user) {
+        //     return $mail->hasTo($user->email);
+        // });    
 
         // Order
         $this->assertTrue($order->user->is($user));
