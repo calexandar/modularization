@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
 use Modules\Order\Tests\OrderTestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Modules\Order\Events\OrderFullfiled;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Modules\Product\Database\Factories\ProductFactory;
