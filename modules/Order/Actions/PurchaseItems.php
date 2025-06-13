@@ -2,15 +2,15 @@
 
 namespace Modules\Order\Actions;
 
-use Modules\Payment\PayBuddy;
 use Modules\Order\Models\Order;
-use Illuminate\Support\Facades\Mail;
 use Modules\Product\CartItemCollection;
 use Illuminate\Database\DatabaseManager;
 use Modules\Order\Events\OrderFullfiled;
 use Illuminate\Contracts\Events\Dispatcher;
+use Modules\Order\DTOs\PendingPayment;
 use Modules\Payment\Actions\CreatePaymentForOrder;
 use Modules\Product\Warehouse\ProductStockManager;
+use Modules\User\UserDto;
 
 class PurchaseItems
 {
@@ -21,20 +21,20 @@ class PurchaseItems
         protected Dispatcher $events
     ) {}
 
-    public function handle(CartItemCollection $items, PayBuddy $paymentProvider, string $paymentToken, int $userId, string $userEmail): Order
+    public function handle(CartItemCollection $items, PendingPayment $pendingPayment, UserDto $user): Order
     {
 
-        return $this->databaseManager->transaction(function () use ($items, $paymentProvider, $paymentToken, $userId) {
-            $order = Order::startForUser($userId);
+        $order = $this->databaseManager->transaction(function () use ($user, $items) {
+            $order = Order::startForUser($user->id);
             $order->addLineitemsFromCartItems($items);
             $order->fulfill();
 
             $this->createPaymentForOrder->handle(
                 orderId: $order->id,
-                userId: $userId,
+                userId: $user->id,
                 totalInCents: $items->totalInCents(),
-                payBuddy: $paymentProvider,
-                paymentToken: $paymentToken);
+                payBuddy: $pendingPayment->provider,
+                paymentToken: $pendingPayment->paymentToken);
 
             return $order;
         });
