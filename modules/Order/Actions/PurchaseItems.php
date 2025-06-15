@@ -7,6 +7,7 @@ use Modules\Product\CartItemCollection;
 use Illuminate\Database\DatabaseManager;
 use Modules\Order\Events\OrderFullfiled;
 use Illuminate\Contracts\Events\Dispatcher;
+use Modules\Order\DTOs\OrderDto;
 use Modules\Order\DTOs\PendingPayment;
 use Modules\Payment\Actions\CreatePaymentForOrder;
 use Modules\Product\Warehouse\ProductStockManager;
@@ -36,19 +37,15 @@ class PurchaseItems
                 payBuddy: $pendingPayment->provider,
                 paymentToken: $pendingPayment->paymentToken);
 
-            return $order;
+            return OrderDto::fromEloquentModel($order);
         });
 
         $this->events->dispatch(
             new OrderFullfiled(
-                orderId: $order->id,
-                totalInCents: $order->totalInCents,
-                localizedTotal: $order->localizedTotal(),
-                cartItems: $items,
-                userId: $userId,
-                userEmail: $userEmail
-            )
-        );
+                order: $order,
+                orderLines: $order->lines,
+                user: $user
+        ));
 
         return $order;
 

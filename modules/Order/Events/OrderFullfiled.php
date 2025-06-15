@@ -2,17 +2,20 @@
 
 namespace Modules\Order\Events;
 
-use Modules\Product\CartItemCollection;
+use Modules\User\UserDto;
+use Modules\Order\DTOs\OrderDto;
 
 readonly class OrderFullfiled
 {
+    /**
+     * Create a new event instance.
+     *
+     * @param OrderDto $order
+     * @param UserDto $user
+     */
     public function __construct(
-        public int $orderId,
-        public int $totalInCents,
-        public string $localizedTotal,
-        public CartItemCollection   $cartItems,
-        public int $userId,                                                                                                                                 
-        public string $userEmail
+     public OrderDto $order,
+     public UserDto $user
     )
     {
     }
