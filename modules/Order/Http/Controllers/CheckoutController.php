@@ -39,7 +39,7 @@ class CheckoutController extends Controller
         }
 
         return response()->json([
-            'order_url' => $order->url(),
+            'order_url' => $order->url,
         ], 201);
     }
 }

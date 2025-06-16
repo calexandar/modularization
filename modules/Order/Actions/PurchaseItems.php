@@ -22,7 +22,7 @@ class PurchaseItems
         protected Dispatcher $events
     ) {}
 
-    public function handle(CartItemCollection $items, PendingPayment $pendingPayment, UserDto $user): Order
+    public function handle(CartItemCollection $items, PendingPayment $pendingPayment, UserDto $user): OrderDto
     {
 
         $order = $this->databaseManager->transaction(function () use ($user, $items) {
@@ -43,7 +43,6 @@ class PurchaseItems
         $this->events->dispatch(
             new OrderFullfiled(
                 order: $order,
-                orderLines: $order->lines,
                 user: $user
         ));
 

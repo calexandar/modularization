@@ -10,6 +10,7 @@ readonly class OrderDto
         public int $id,
         public int $totalInCents,
         public string $localizedTotal,
+        public string $url,
         public array $lines
     )
     {
@@ -20,8 +21,10 @@ readonly class OrderDto
     {
         return new self(
             id: $order->id,
-            totalInCents: $order->totalInCents,
-            localizedTotal: $order->localizedTotal
+            totalInCents: $order->totalInCents(),
+            localizedTotal: $order->localizedTotal(),
+            url: $order->url(),
+            lines: OrderLineDto::fromEloquentCollection($order->lines),
         );
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Modules\Order\Mail;
 
-class OrderReceived
+class OrderReceived extends \Illuminate\Mail\Mailable
 {
     public function __construct(public float $total)
     {
