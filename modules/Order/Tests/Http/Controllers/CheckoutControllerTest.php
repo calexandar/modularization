@@ -38,7 +38,7 @@ class CheckoutControllerTest extends OrderTestCase
         $paymentToken = PayBuddy::validToken();
 
         $response = $this->actingAs($user)
-            ->postJson(route('checkout'), [
+            ->post(route('checkout'), [
                 'payment_token' => $paymentToken,
                 'products' => [
                     ['id' => $products->first()->id, 'quantity' => 1],
