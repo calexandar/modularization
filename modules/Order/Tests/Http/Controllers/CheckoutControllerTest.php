@@ -23,6 +23,7 @@ class CheckoutControllerTest extends OrderTestCase
     #[Test]
     public function it_succesufly_creates_an_order(): void
     {
+        $this->withoutExceptionHandling();
         Mail::fake();
         Event::fake();
         

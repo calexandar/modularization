@@ -11,11 +11,13 @@ use Modules\Order\Actions\PurchaseItems;
 use Illuminate\Validation\ValidationException;
 use Modules\Order\Http\Requests\CheckoutRequest;
 use Modules\Order\Exceptions\PaymentFailedException;
+use Modules\Payment\PaymentGateway;
 
 class CheckoutController extends Controller
 {
     public function __construct(
-        protected PurchaseItems $purchaseItems
+        protected PurchaseItems $purchaseItems,
+        protected PaymentGateway $paymentGateway
     ) {}
 
     public function __invoke(CheckoutRequest $request)
@@ -24,7 +26,7 @@ class CheckoutController extends Controller
         $payBuddy = new PayBuddy;
         $payBuddy->make();
 
-        $pendingPayment = new PendingPayment($payBuddy, $request->input('payment_token'));
+        $pendingPayment = new PendingPayment($this->paymentGateway, $request->input('payment_token'));
         $userDto = UserDto::fromEloquentModel($request->user());
 
         try {

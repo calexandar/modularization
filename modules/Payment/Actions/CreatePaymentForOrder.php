@@ -2,9 +2,10 @@
 
 namespace Modules\Payment\Actions;
 
-use Modules\Order\Exceptions\PaymentFailedException;
-use Modules\Payment\PayBuddy;
 use Modules\Payment\Payment;
+use Modules\Payment\PaymentDetails;
+use Modules\Payment\PaymentGateway;
+use Modules\Order\Exceptions\PaymentFailedException;
 
 class CreatePaymentForOrder
 {
@@ -19,14 +20,16 @@ class CreatePaymentForOrder
         int $orderId,
         int $userId,
         int $totalInCents,
-        PayBuddy $payBuddy,
+        PaymentGateway $paymentGateway,
         string $paymentToken
     ): Payment {
         try {
-            $charge = $payBuddy->charge(
-                token: $paymentToken,
-                amountInCents: $totalInCents,
-                statementDescription: 'Modularization',
+            $charge = $paymentGateway->charge(
+               new PaymentDetails(
+                $paymentToken, 
+                $totalInCents, 
+                'Modularization'
+               )
             );
         } catch (\RuntimeException) {
             throw PaymentFailedException::dueToInvalidToken();
