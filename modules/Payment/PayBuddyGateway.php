@@ -2,6 +2,8 @@
 
 namespace Modules\Payment;
 
+use Modules\Order\Exceptions\PaymentFailedException;
+
 class PayBuddyGateway implements PaymentGateway
 {
 
@@ -13,11 +15,17 @@ class PayBuddyGateway implements PaymentGateway
     }
     public function charge(PaymentDetails $paymentDetails): SuccesefulPayment
     {
-        $charge = $this->payBuddy->charge(
+      try {
+          $charge = $this->payBuddy->charge(
             token: $paymentDetails->paymentToken,
             amountInCents: $paymentDetails->amountInCents,
             statementDescription: $paymentDetails->statementDescription,
         );
+      } catch (\RuntimeException $exception) {
+            throw new PaymentFailedException(
+                $exception->getMessage()
+            );
+      }
 
         return new SuccesefulPayment(
             $charge['id'], 

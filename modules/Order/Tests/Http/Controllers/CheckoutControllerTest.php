@@ -4,9 +4,11 @@ namespace Modules\Order\Tests\Http\Controllers;
 
 
 
+use Modules\Payment\Payment;
 use Modules\Payment\PayBuddy;
 use Modules\Order\Models\Order;
 use Database\Factories\UserFactory;
+use Modules\Payment\PaymentGateway;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
 use Modules\Order\Tests\OrderTestCase;
@@ -14,6 +16,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Modules\Order\Events\OrderFullfiled;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Modules\Payment\PaymentProvider;
 use Modules\Product\Database\Factories\ProductFactory;
 
 class CheckoutControllerTest extends OrderTestCase
@@ -65,13 +68,12 @@ class CheckoutControllerTest extends OrderTestCase
         $this->assertTrue($order->user->is($user));
         $this->assertEquals(3000, $order->total_in_cents);
         $this->assertEquals('paid', $order->status);
-        $this->assertEquals('PayBuddy', $order->payment_gateway);
-        $this->assertEquals(36, strlen($order->payment_id));
+
 
         // Payment
         $payment = $order->lastPayment;
         $this->assertEquals('paid', $payment->status);
-        $this->assertEquals('PayBuddy', $payment->payment_gateway);
+        $this->assertEquals(PaymentProvider::PAYBUDDY, $payment->payment_gateway);
         $this->assertEquals(36, strlen($payment->payment_id));
         $this->assertEquals(3000, $payment->total_in_cents);
         $this->assertTrue($payment->user->is($user));
