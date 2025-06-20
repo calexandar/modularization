@@ -12,10 +12,7 @@ readonly class OrderDto
         public string $localizedTotal,
         public string $url,
         public array $lines
-    )
-    {
-        
-    }
+    ) {}
 
     public static function fromEloquentModel(Order $order): self
     {

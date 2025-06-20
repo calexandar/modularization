@@ -2,16 +2,16 @@
 
 namespace Modules\Order\Http\Controllers;
 
-use Modules\User\UserDto;
-use Modules\Payment\PayBuddy;
 use App\Http\Controllers\Controller;
-use Modules\Order\DTOs\PendingPayment;
-use Modules\Product\CartItemCollection;
-use Modules\Order\Actions\PurchaseItems;
 use Illuminate\Validation\ValidationException;
-use Modules\Order\Http\Requests\CheckoutRequest;
+use Modules\Order\Actions\PurchaseItems;
+use Modules\Order\DTOs\PendingPayment;
 use Modules\Order\Exceptions\PaymentFailedException;
+use Modules\Order\Http\Requests\CheckoutRequest;
+use Modules\Payment\PayBuddy;
 use Modules\Payment\PaymentGateway;
+use Modules\Product\CartItemCollection;
+use Modules\User\UserDto;
 
 class CheckoutController extends Controller
 {

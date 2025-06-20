@@ -4,7 +4,5 @@ namespace Modules\Order\Mail;
 
 class OrderReceived extends \Illuminate\Mail\Mailable
 {
-    public function __construct(public float $total)
-    {
-    }
+    public function __construct(public float $total) {}
 }

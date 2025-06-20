@@ -2,22 +2,19 @@
 
 namespace Modules\Order\Tests\Http\Controllers;
 
-
-
-use Modules\Payment\Payment;
-use Modules\Payment\PayBuddy;
-use Modules\Order\Models\Order;
 use Database\Factories\UserFactory;
-use Modules\Payment\PaymentGateway;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Event;
-use Modules\Order\Tests\OrderTestCase;
-use PHPUnit\Framework\Attributes\Test;
-use Modules\Order\Events\OrderFullfiled;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Modules\Order\Events\OrderFullfiled;
+use Modules\Order\Models\Order;
+use Modules\Order\Tests\OrderTestCase;
+use Modules\Payment\PayBuddy;
+use Modules\Payment\Payment;
 use Modules\Payment\PaymentProvider;
 use Modules\Product\Database\Factories\ProductFactory;
+use PHPUnit\Framework\Attributes\Test;
 
 class CheckoutControllerTest extends OrderTestCase
 {
@@ -29,7 +26,7 @@ class CheckoutControllerTest extends OrderTestCase
         $this->withoutExceptionHandling();
         Mail::fake();
         Event::fake();
-        
+
         $user = UserFactory::new()->create();
 
         $products = ProductFactory::new()->count(2)->create(
@@ -57,18 +54,17 @@ class CheckoutControllerTest extends OrderTestCase
                 'order_url' => $order->url(),
             ])
             ->assertStatus(201);
-            
-        Event::assertDispatched(OrderFullfiled::class);    
+
+        Event::assertDispatched(OrderFullfiled::class);
 
         // Mail::assertSent(OrderReceived::class, function(OrderReceived $mail) use ($user) {
         //     return $mail->hasTo($user->email);
-        // });    
+        // });
 
         // Order
         $this->assertTrue($order->user->is($user));
         $this->assertEquals(3000, $order->total_in_cents);
         $this->assertEquals('paid', $order->status);
-
 
         // Payment
         $payment = $order->lastPayment;

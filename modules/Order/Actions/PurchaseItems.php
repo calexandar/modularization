@@ -2,14 +2,14 @@
 
 namespace Modules\Order\Actions;
 
-use Modules\Order\Models\Order;
-use Modules\Product\CartItemCollection;
-use Illuminate\Database\DatabaseManager;
-use Modules\Order\Events\OrderFullfiled;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Database\DatabaseManager;
 use Modules\Order\DTOs\OrderDto;
 use Modules\Order\DTOs\PendingPayment;
+use Modules\Order\Events\OrderFullfiled;
+use Modules\Order\Models\Order;
 use Modules\Payment\Actions\CreatePaymentForOrder;
+use Modules\Product\CartItemCollection;
 use Modules\Product\Warehouse\ProductStockManager;
 use Modules\User\UserDto;
 
@@ -44,7 +44,7 @@ class PurchaseItems
             new OrderFullfiled(
                 order: $order,
                 user: $user
-        ));
+            ));
 
         return $order;
 

@@ -3,7 +3,6 @@
 namespace Modules\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Product\Providers\EventServiceProvider;
 
 class ProductServiceProvider extends ServiceProvider
 {

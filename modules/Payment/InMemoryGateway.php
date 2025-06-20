@@ -1,4 +1,4 @@
-<?php   
+<?php
 
 namespace Modules\Payment;
 
@@ -9,7 +9,7 @@ class InMemoryGateway implements PaymentGateway
     public function charge(PaymentDetails $paymentDetails): SuccesefulPayment
     {
         return new SuccesefulPayment(
-            (string)  Str::uuid(),
+            (string) Str::uuid(),
             $paymentDetails->amountInCents,
             $this->id()
         );

@@ -11,10 +11,7 @@ readonly class OrderLineDto
         public int $productId,
         public int $productPriceInCents,
         public int $quantity
-    )
-    {
-        
-    }
+    ) {}
 
     public static function fromEloquentModel(OrderLine $orderLine): self
     {

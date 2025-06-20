@@ -3,7 +3,6 @@
 namespace Modules\Order\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Order\Providers\EventServiceProvider;
 
 class OrderServiceProvider extends ServiceProvider
 {

@@ -1,4 +1,4 @@
-<?php   
+<?php
 
 namespace Modules\Payment;
 
@@ -8,8 +8,5 @@ class SuccesefulPayment
         public string $id,
         public int $amountInCents,
         public PaymentProvider $provider
-    )
-    {
-        
-    }
+    ) {}
 }

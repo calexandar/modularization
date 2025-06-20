@@ -8,8 +8,5 @@ readonly class PaymentDetails
         public string $paymentToken,
         public int $amountInCents,
         public string $statementDescription
-    )
-    {
-        
-    }
+    ) {}
 }

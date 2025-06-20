@@ -2,11 +2,10 @@
 
 namespace Modules\Payment\Actions;
 
-use RuntimeException;
+use Modules\Order\Exceptions\PaymentFailedException;
 use Modules\Payment\Payment;
 use Modules\Payment\PaymentDetails;
 use Modules\Payment\PaymentGateway;
-use Modules\Order\Exceptions\PaymentFailedException;
 
 class CreatePaymentForOrder
 {
@@ -25,14 +24,13 @@ class CreatePaymentForOrder
         string $paymentToken
     ): Payment {
 
-            $charge = $paymentGateway->charge(
-               new PaymentDetails(
-                $paymentToken, 
-                $totalInCents, 
+        $charge = $paymentGateway->charge(
+            new PaymentDetails(
+                $paymentToken,
+                $totalInCents,
                 'Modularization'
-               )
-            );
-
+            )
+        );
 
         return Payment::query()->create([
             'total_in_cents' => $totalInCents,
