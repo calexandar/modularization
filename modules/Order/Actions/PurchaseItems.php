@@ -8,7 +8,7 @@ use Modules\Order\DTOs\OrderDto;
 use Modules\Order\DTOs\PendingPayment;
 use Modules\Order\Events\OrderFullfiled;
 use Modules\Order\Models\Order;
-use Modules\Payment\Actions\CreatePaymentForOrder;
+use Modules\Payment\Actions\CreatePaymentForOrderInterface;
 use Modules\Product\CartItemCollection;
 use Modules\Product\Warehouse\ProductStockManager;
 use Modules\User\UserDto;
@@ -17,7 +17,7 @@ class PurchaseItems
 {
     public function __construct(
         protected ProductStockManager $productStockManager,
-        protected CreatePaymentForOrder $createPaymentForOrder,
+        protected CreatePaymentForOrderInterface $createPaymentForOrder,
         protected DatabaseManager $databaseManager,
         protected Dispatcher $events
     ) {}
