@@ -2,26 +2,21 @@
 
 namespace Modules\Order\Checkout;
 
-
 use Modules\Order\DTOs\OrderDto;
 use Modules\Order\Mail\OrderReceived;
+use Modules\Order\Events\OrderStarted;
 use PHPUnit\Framework\Attributes\Test;
+use Illuminate\Console\Scheduling\Event;
 
 
 class OrderStartedTest extends \Tests\TestCase
 {
     #[Test]
-    public function it_renders_the_mailable(): void
+    public function it_has_listeners(): void
     {
-        $orderDto = new OrderDto(
-            id: 1,
-            totalInCents: 1000,
-            localizedTotal: '1000',
-            url: route('orders.show', 1),
-            lines: []
-        );
-        $orderReceived = new OrderReceived($orderDto);
+       Event::fake();
 
-        $this->assertIsString($orderReceived->render());
+       Event::assertListening(OrderStarted::class, SendOrderConfirmationEmail::class);
+       Event::assertListening(OrderStarted::class, PayOrder::class);
     }
 }
