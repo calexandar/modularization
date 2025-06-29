@@ -28,22 +28,16 @@ class PurchaseItems
         $order = $this->databaseManager->transaction(function () use ($user, $items) {
             $order = Order::startForUser($user->id);
             $order->addLineitemsFromCartItems($items);
-            $order->fulfill();
-
-            $this->createPaymentForOrder->handle(
-                orderId: $order->id,
-                userId: $user->id,
-                totalInCents: $items->totalInCents(),
-                payBuddy: $pendingPayment->provider,
-                paymentToken: $pendingPayment->paymentToken);
+            $order->start();
 
             return OrderDto::fromEloquentModel($order);
         });
 
         $this->events->dispatch(
-            new OrderFullfiled(
+            new OrderStarted(
                 order: $order,
-                user: $user
+                user: $user,
+                pendingPayment: $pendingPayment
             ));
 
         return $order;
