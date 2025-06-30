@@ -2,8 +2,8 @@
 
 namespace Modules\Order\Checkout;
 
-use Modules\Order\DTOs\OrderDto;
-use Modules\Order\Mail\OrderReceived;
+
+use Modules\Payment\PayOrder;
 use Modules\Order\Events\OrderStarted;
 use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Console\Scheduling\Event;
