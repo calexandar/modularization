@@ -33,7 +33,7 @@ class Order extends Model
 
     public const COMPLETED = 'completed';
 
-     public const PAYMENT_FAILED = 'payment_failed';
+    public const PAYMENT_FAILED = 'payment_failed';
 
     public function user(): BelongsTo
     {
@@ -102,7 +102,7 @@ class Order extends Model
         $this->lines()->saveMany($this->lines());
     }
 
-        public function markAsFailed(): void
+    public function markAsFailed(): void
     {
         if ($this->isCompleted()) {
             throw new \RuntimeException('A completed order cannot be marked as failed.');

@@ -13,6 +13,5 @@ readonly class PaymentFailed
         public OrderDto $order,
         public UserDto $user,
         public string $reason,
-    ) {
-    }
+    ) {}
 }

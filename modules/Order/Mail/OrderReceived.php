@@ -2,11 +2,11 @@
 
 namespace Modules\Order\Mail;
 
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 use Modules\Order\DTOs\OrderDto;
 
 class OrderReceived extends Mailable
@@ -15,11 +15,11 @@ class OrderReceived extends Mailable
 
     public function __construct(
         public OrderDto $order
-        ) {}
+    ) {}
 
     public function envelope(): Envelope
     {
-        return new  Envelope(
+        return new Envelope(
             subject: 'Order Received',
         );
     }

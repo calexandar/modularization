@@ -2,11 +2,10 @@
 
 namespace Modules\Payment\Actions;
 
+use Modules\Order\Exceptions\PaymentFailedException;
 use Modules\Payment\Payment;
 use Modules\Payment\PaymentDetails;
 use Modules\Payment\PaymentGateway;
-use Modules\Order\Exceptions\PaymentFailedException;
-use Modules\Payment\Actions\CreatePaymentForOrderInterface;
 
 class CreatePaymentForOrder implements CreatePaymentForOrderInterface
 {

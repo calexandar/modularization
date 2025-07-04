@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Modules\Order\Checkout;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -20,8 +21,7 @@ class PaymentForOrderFailed extends Mailable
     public function __construct(
         public OrderDto $order,
         public string $reason,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the message envelope.

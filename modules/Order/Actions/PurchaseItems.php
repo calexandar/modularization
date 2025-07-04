@@ -2,17 +2,16 @@
 
 namespace Modules\Order\Actions;
 
-use Modules\User\UserDto;
-use Modules\Order\Models\Order;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Database\DatabaseManager;
 use Modules\Order\DTOs\OrderDto;
 use Modules\Order\DTOs\PendingPayment;
 use Modules\Order\Events\OrderStarted;
-use Modules\Product\CartItemCollection;
-use Illuminate\Database\DatabaseManager;
-use Modules\Order\Events\OrderFullfiled;
-use Illuminate\Contracts\Events\Dispatcher;
-use Modules\Product\Warehouse\ProductStockManager;
+use Modules\Order\Models\Order;
 use Modules\Payment\Actions\CreatePaymentForOrderInterface;
+use Modules\Product\CartItemCollection;
+use Modules\Product\Warehouse\ProductStockManager;
+use Modules\User\UserDto;
 
 class PurchaseItems
 {

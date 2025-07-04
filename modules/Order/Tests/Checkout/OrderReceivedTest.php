@@ -2,11 +2,9 @@
 
 namespace Modules\Order\Checkout;
 
-
 use Modules\Order\DTOs\OrderDto;
 use Modules\Order\Mail\OrderReceived;
 use PHPUnit\Framework\Attributes\Test;
-
 
 class OrderReceivedTest extends \Tests\TestCase
 {
