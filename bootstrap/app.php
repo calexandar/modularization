@@ -11,11 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         using: function () {
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+            Route::middleware('api')
+                ->group(base_path('routes/api.php'));
 
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+         $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
