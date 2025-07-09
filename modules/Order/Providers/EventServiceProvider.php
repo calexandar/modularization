@@ -13,7 +13,6 @@ class EventServiceProvider extends BaseEventServiceProvider
     protected $listen = [
         OrderFullfiled::class => [
             SendOrderConfirmationEmail::class,
-            PayOrder::class,
         ],
         PaymentSuccess::class => [
             CompleteOrder::class

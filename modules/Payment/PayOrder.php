@@ -2,11 +2,13 @@
 
 namespace Modules\Payment;
 
-use Modules\Order\Exceptions\PaymentFailedException;
 use Modules\Order\Mail\OrderReceived;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\Payment\Actions\CreatePaymentForOrder;
+use Modules\Order\Exceptions\PaymentFailedException;
 
-class PayOrder
+class PayOrder implements ShouldQueue
 {
     public function __construct(
         private CreatePaymentForOrder $createPaymentForOrder,

@@ -2,10 +2,11 @@
 
 namespace Modules\Product\Events;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\Order\Events\OrderFullfiled;
 use Modules\Product\Warehouse\ProductStockManager;
 
-class DecreaseProductStock
+class DecreaseProductStock implements ShouldQueue
 {
     public function __construct(
         protected ProductStockManager $productStockManager
