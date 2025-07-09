@@ -5,6 +5,7 @@ namespace Modules\Order\Providers;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as BaseEventServiceProvider;
 use Modules\Order\Events\OrderFullfiled;
 use Modules\Order\Events\SendOrderConfirmationEmail;
+use Modules\Payment\PaymentFailed;
 use Modules\Payment\PayOrder;
 
 class EventServiceProvider extends BaseEventServiceProvider
@@ -14,5 +15,12 @@ class EventServiceProvider extends BaseEventServiceProvider
             SendOrderConfirmationEmail::class,
             PayOrder::class,
         ],
+        PaymentSuccess::class => [
+            CompleteOrder::class
+        ],
+        PaymentFailed::class => [
+            MarkOrderAsFailed::class,
+            NotufyUserOfPaymentFailure::class
+        ]
     ];
 }
